@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPLG 3 - Akademik Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content glass-card">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="email" id="loginEmail" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn-primary">Login</button>
+                <p class="switch-auth">Belum punya akun? <span id="showRegister">Daftar</span></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content glass-card">
+            <h2>Daftar Akun</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <input type="text" id="registerName" placeholder="Nama Lengkap" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="registerEmail" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="registerPassword" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <select id="registerRole" required>
+                        <option value="">Pilih Role</option>
+                        <option value="siswa">Siswa</option>
+                        <option value="admin">guru</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary">Daftar</button>
+                <p class="switch-auth">Sudah punya akun? <span id="showLogin">Login</span></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar glass-card" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>PPLG 3</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" data-page="beranda">
+                <i class="fas fa-home"></i>
+                <span>Beranda</span>
+            </a>
+            <div class="nav-dropdown">
+                <a href="#" class="nav-item" data-dropdown="data">
+                    <i class="fas fa-database"></i>
+                    <span>Data</span>
+                    <i class="fas fa-chevron-down dropdown-icon"></i>
+                </a>
+                <div class="dropdown-content">
+                    <a href="#" data-page="siswa">Siswa</a>
+                    <a href="#" data-page="kelas">Kelas</a>
+                    <a href="#" data-page="jurusan">Jurusan</a>
+                </div>
+            </div>
+            <a href="#" class="nav-item" data-page="pelajaran">
+                <i class="fas fa-book"></i>
+                <span>Pelajaran</span>
+            </a>
+            <a href="#" class="nav-item" data-page="tugas">
+                <i class="fas fa-tasks"></i>
+                <span>Tugas & Reminder</span>
+            </a>
+            <a href="#" class="nav-item" data-page="tentang">
+                <i class="fas fa-info-circle"></i>
+                <span>Tentang</span>
+            </a>
+            <a href="#" class="nav-item" data-page="sosmed">
+                <i class="fas fa-share-alt"></i>
+                <span>Media Sosial</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="header glass-card">
+            <div class="header-left">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="header-logo">
+                    <i class="fas fa-school"></i>
+                    <span>SMKN 1 CIOMAS</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="user-profile" id="userProfile">
+                    <img src="https://ui-avatars.com/api/?name=User&background=667eea&color=fff" alt="Profile">
+                    <span class="user-name">Guest</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="profile-dropdown glass-card">
+                    <a href="#" id="profileLink"><i class="fas fa-user"></i> Profil</a>
+                    <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content Area -->
+        <div class="content">
+            <!-- Beranda Page -->
+            <div id="berandaPage" class="page active">
+                <div class="hero glass-card">
+                    <div class="hero-content">
+                        <h1>Selamat Datang di Portal Akademik PPLG 3</h1>
+                        <p>Sistem Manajemen Tugas & Pembelajaran Digital</p>
+                    </div>
+                    <div class="hero-image">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                </div>
+
+                <div class="dashboard-stats">
+                    <div class="stat-card glass-card">
+                        <i class="fas fa-users"></i>
+                        <h3>45</h3>
+                        <p>Total Siswa</p>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <i class="fas fa-book-open"></i>
+                        <h3>14</h3>
+                        <p>Mata Pelajaran</p>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <i class="fas fa-tasks"></i>
+                        <h3 id="totalTasks">0</h3>
+                        <p>Tugas Aktif</p>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <i class="fas fa-clock"></i>
+                        <h3 id="upcomingDeadlines">0</h3>
+                        <p>Deadline Mendatang</p>
+                    </div>
+                </div>
+
+                <div class="quick-access">
+                    <h2>Akses Cepat</h2>
+                    <div class="quick-links">
+                        <div class="quick-link glass-card" data-navigate="tugas">
+                            <i class="fas fa-clipboard-list"></i>
+                            <span>Lihat Tugas</span>
+                        </div>
+                        <div class="quick-link glass-card" data-navigate="siswa">
+                            <i class="fas fa-user-graduate"></i>
+                            <span>Data Siswa</span>
+                        </div>
+                        <div class="quick-link glass-card" data-navigate="pelajaran">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <span>Pelajaran</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Siswa Page -->
+            <div id="siswaPage" class="page">
+                <div class="page-header">
+                    <h1>Data Siswa PPLG 3</h1>
+                    <button class="btn-primary" id="addSiswaBtn">
+                        <i class="fas fa-plus"></i> Tambah Siswa
+                    </button>
+                </div>
+                <div class="table-container glass-card">
+                    <table id="siswaTable">
+                        <thead>
+                            <tr>
+                                <th>No. Urut</th>
+                                <th>No. Induk</th>
+                                <th>NISN</th>
+                                <th>Nama Siswa</th>
+                                <th>L/P</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="siswaTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Kelas Page -->
+            <div id="kelasPage" class="page">
+                <div class="page-header">
+                    <h1>Informasi Kelas</h1>
+                </div>
+                <div class="class-info glass-card">
+                    <h2>PPLG 3 (Pengembangan Perangkat Lunak dan Gim)</h2>
+                    <div class="class-details">
+                        <div class="detail-item">
+                            <i class="fas fa-users"></i>
+                            <span>Jumlah Siswa: 45 Orang</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-user-tie"></i>
+                            <span>Wali Kelas: Firman Sidik, S.Pd</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-id-card"></i>
+                            <span>NI PPPK: 199501052022211003</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-venus-mars"></i>
+                            <span>Laki-laki: 28 | Perempuan: 17</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jurusan Page -->
+            <div id="jurusanPage" class="page">
+                <div class="page-header">
+                    <h1>Informasi Jurusan</h1>
+                </div>
+                <div class="major-info glass-card">
+                    <h2>Pengembangan Perangkat Lunak dan Gim (PPLG)</h2>
+                    <p>Jurusan PPLG membekali siswa dengan keterampilan dalam pengembangan aplikasi, website, game, dan sistem informasi. Siswa akan mempelajari berbagai bahasa pemrograman, framework modern, dan teknologi terkini dalam dunia software development.</p>
+                    <div class="skills-grid">
+                        <div class="skill-item"><i class="fas fa-code"></i> Web Development</div>
+                        <div class="skill-item"><i class="fas fa-mobile-alt"></i> Mobile Apps</div>
+                        <div class="skill-item"><i class="fas fa-gamepad"></i> Game Development</div>
+                        <div class="skill-item"><i class="fas fa-database"></i> Database Management</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pelajaran Page -->
+            <div id="pelajaranPage" class="page">
+                <div class="page-header">
+                    <h1>Mata Pelajaran</h1>
+                </div>
+                <div class="subjects-grid">
+                    <div class="subject-card glass-card">
+                        <i class="fas fa-running"></i>
+                        <h3>PJOK</h3>
+                        <p>Pendidikan Jasmani Olahraga dan Kesehatan</p>
+                    </div>
+                    <div class="subject-card glass-card">
+                        <i class="fas fa-language"></i>
+                        <h3>ENGLISH</h3>
+                        <p>Bahasa Inggris</p>
+                    </div>
+                    <div class="subject-card glass-card">
+                        <i class="fas fa-flask"></i>
+                        <h3>IPAS</h3>
+                        <p>Ilmu Pengetahuan Alam dan Sosial</p>
+                    </div>
+                    <div class="subject-card glass-card">
+                        <i class="fas fa-book"></i>
+                        <h3>INDONESIA</h3>
+                        <p>Bahasa Indonesia</p>
+                    </div>
+                    <div class="subject-card glass-card">
+                        <i class="fas fa-palette"></i>
+                        <h3>SBK</h3>
+                        <p>Seni Budaya dan Keterampilan</p>
+                    </div>
+                    <div class="subject-card glass-card">
+                        <i class="fas fa-flag"></i>
+                        <h3>PKN</h3>
+                        <p>Pendidikan Kewarganegaraan</p>
+                    </div>
+                    <div class="subject-card glass-card">
+                        <i class="fas fa-mosque"></i>
+                        <h3>PAI</h3>
+                        <p>Pendidikan Agama Islam</p>
+                    </div>
+                    <div class="subject-card glass-card">
+                        <i class="fas fa-calculator"></i>
+                        <h3>MATH</h3>
+                        <p>Matematika</p>
+                    </div>
+                    <div class="subject-card glass-card">
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>INFORMATIKA</h3>
+                        <p>Informatika</p>
+                    </div>
+                    <div class="subject-card glass-card">
+                        <i class="fas fa-mountain"></i>
+                        <h3>SUNDA</h3>
+                        <p>Bahasa Sunda</p>
+                    </div>
+                    <div class="subject-card glass-card">
+                        <i class="fas fa-landmark"></i>
+                        <h3>SEJARAH</h3>
+                        <p>Sejarah Indonesia</p>
+                    </div>
+                    <div class="subject-card glass-card">
+                        <i class="fas fa-tools"></i>
+                        <h3>PRODUKTIF BU DIAH</h3>
+                        <p>Mata Pelajaran Produktif</p>
+                    </div>
+                    <div class="subject-card glass-card">
+                        <i class="fas fa-tools"></i>
+                        <h3>PRODUKTIF PA DIDIN</h3>
+                        <p>Mata Pelajaran Produktif</p>
+                    </div>
+                    <div class="subject-card glass-card">
+                        <i class="fas fa-tools"></i>
+                        <h3>PRODUKTIF PAK RIZKY</h3>
+                        <p>Mata Pelajaran Produktif</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tugas Page -->
+            <div id="tugasPage" class="page">
+                <div class="page-header">
+                    <h1>Tugas & Reminder</h1>
+                    <button class="btn-primary" id="addTaskBtn">
+                        <i class="fas fa-plus"></i> Tambah Tugas
+                    </button>
+                </div>
+                <div class="tasks-container" id="tasksContainer"></div>
+            </div>
+
+            <!-- Tentang Page -->
+            <div id="tentangPage" class="page">
+                <div class="page-header">
+                    <h1>Tentang PPLG 3</h1>
+                </div>
+                <div class="about-content glass-card">
+                    <h2>Kelas Pengembangan Perangkat Lunak dan Gim 3</h2>
+                    <p>PPLG 3 adalah kelas yang berfokus pada pengembangan kompetensi siswa di bidang teknologi informasi, khususnya dalam pemrograman, pengembangan aplikasi, dan game development. Kami berkomitmen untuk menghasilkan lulusan yang siap bersaing di industri teknologi digital.</p>
+                    
+                    <h3>Visi</h3>
+                    <p>Menjadi kelas unggulan yang menghasilkan developer profesional dan berkarakter.</p>
+                    
+                    <h3>Misi</h3>
+                    <ul>
+                        <li>Memberikan pendidikan berkualitas di bidang software development</li>
+                        <li>Mengembangkan kreativitas dan inovasi siswa dalam teknologi</li>
+                        <li>Membangun karakter profesional dan etika kerja yang baik</li>
+                        <li>Mempersiapkan siswa untuk industri teknologi global</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sosmed Page -->
+            <div id="sosmedPage" class="page">
+                <div class="page-header">
+                    <h1>Media Sosial</h1>
+                </div>
+                <div class="social-links">
+                    <a href="#" class="social-card glass-card">
+                        <i class="fab fa-instagram"></i>
+                        <h3>Instagram</h3>
+                        <p>@pplg3_smkn1katapang</p>
+                    </a>
+                    <a href="#" class="social-card glass-card">
+                        <i class="fab fa-youtube"></i>
+                        <h3>YouTube</h3>
+                        <p>PPLG 3 Channel</p>
+                    </a>
+                    <a href="#" class="social-card glass-card">
+                        <i class="fab fa-github"></i>
+                        <h3>GitHub</h3>
+                        <p>github.com/pplg3</p>
+                    </a>
+                    <a href="#" class="social-card glass-card">
+                        <i class="fab fa-discord"></i>
+                        <h3>Discord</h3>
+                        <p>PPLG 3 Community</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2025 NASALMAI. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Settings Panel -->
+    <div class="settings-panel glass-card" id="settingsPanel">
+        <button class="settings-toggle" id="settingsToggle">
+            <i class="fas fa-cog"></i>
+        </button>
+        <div class="settings-content">
+            <h3>Pengaturan</h3>
+            <div class="setting-item">
+                <label>
+                    <i class="fas fa-moon"></i>
+                    <span>Tema Gelap</span>
+                </label>
+                <label class="switch">
+                    <input type="checkbox" id="themeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="setting-item">
+                <label>
+                    <i class="fas fa-text-height"></i>
+                    <span>Ukuran Font: <span id="fontSizeValue">5</span></span>
+                </label>
+                <input type="range" id="fontSizeSlider" min="1" max="10" value="5">
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
